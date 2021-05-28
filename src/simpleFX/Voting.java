@@ -1,10 +1,12 @@
 package simpleFX;
 
 import javafx.application.Application;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.w3c.dom.events.Event;
 
@@ -16,24 +18,31 @@ public class Voting extends Application {
 
     @Override
     public void start(Stage stage) {
-        HBox root = new HBox();
-        Scene scene = new Scene(root, 640, 480);
-
+        GridPane root = new GridPane();
+        Scene scene = new Scene(root, 250, 120);
+        root.setPadding(new Insets(10));
+        root.setVgap(30);
+        root.setHgap(50);
+        root.setGridLinesVisible(true);
 
         Button ofraButton = new Button("Ofra Haza");
         Button yardenaButton = new Button("Yardena Arazi");
 
+        Label votes = new Label("0");
+        votes.setStyle("-fx-background-color: RED");
+        GridPane.setHalignment(votes, HPos.CENTER);
+        GridPane.setFillWidth(votes, true);
+        votes.setMaxWidth(Double.MAX_VALUE);
 
-        root.getChildren().add(ofraButton);
-        ofraButton.setPadding(new Insets(10,50,10,10));
-        yardenaButton.setPadding(new Insets(10,10,10,50));
-        root.getChildren().add(yardenaButton);
-        stage.setTitle("Voting");
+        root.add(ofraButton, 0, 0);
+        root.add(yardenaButton, 1, 0);
+        root.add(votes, 0, 1, 2, 1);
+        stage.setTitle("Voting Machine");
         stage.setScene(scene);
         stage.show();
     }
 
-    public interface EventHandler<T extends Event>{
+    public interface EventHandler<T extends Event> {
         void Handle(T event);
     }
 }

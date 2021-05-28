@@ -14,11 +14,13 @@ public class TwoArrays implements Iterable<Integer> {
         int index = 0;
         list = new ArrayList<>();
 
+        //if both of the arrays are not empty yet,
+        //iterates between them when adding elements to the list
         while (arrSize1 > 0 && arrSize2 > 0) {
             list.add(a1[index]);
             list.add(a2[index]);
-            arrSize1++;
-            arrSize2++;
+            arrSize1--;
+            arrSize2--;
             index++;
         }
         while (arrSize1 > 0) {
@@ -35,26 +37,20 @@ public class TwoArrays implements Iterable<Integer> {
 
     @Override
     public Iterator<Integer> iterator() {
-        return new CustomIterator(list);
+        return new CustomIterator();
     }
 
     private class CustomIterator implements Iterator<Integer> {
-
-        private List<Integer> internalList;
         private int index;
-
-        public CustomIterator(List<Integer> internalList) {
-            this.internalList = internalList;
-        }
 
         @Override
         public boolean hasNext() {
-            return index < internalList.size() - 1;
+            return index < list.size();
         }
 
         @Override
         public Integer next() {
-            Integer val = internalList.get(index);
+            Integer val = list.get(index);
             index++;
             return val;
         }

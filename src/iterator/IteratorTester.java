@@ -120,7 +120,7 @@ public class IteratorTester extends IteratorTesterBase {
 		testStructure();
 		testTwoArrays();
 		testTwoArrays2();
-//		testCombined();
+		testCombined();
 //		testInfinite();
 	}
 }
