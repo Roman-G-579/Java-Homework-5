@@ -44,6 +44,7 @@ public class Combined<E> implements Iterable<E> {
 
             }
         }
+
         @Override
         public E next() {
 
