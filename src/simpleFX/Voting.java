@@ -21,7 +21,6 @@ public class Voting extends Application {
         launch(args);
     }
 
-
     @Override
     public void start(Stage stage) {
 
