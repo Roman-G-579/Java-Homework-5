@@ -1,39 +1,65 @@
 package mineSweeper;
 
+import java.util.List;
+
 public class Mines {
 
     private int height;
     private int width;
     private int numMines;
-    private Cell[][] board;
+    private boolean showAll;
+    private Tile[][] board;
 
     public Mines(int height, int width, int numMines) {
         this.height = height;
         this.width = width;
         this.numMines = numMines;
 
-        board = new Cell[height][width];
+        board = new Tile[height][width];
+
+        //adds the mines randomly to the board
+        while (numMines != 0) {
+            if (addMine((int) (Math.random() * height), (int) (Math.random() * width))) {
+                numMines--;
+            }
+        }
     }
 
     public boolean addMine(int i, int j) {
-        if (!board[i][j].hasMine) {
-            board[i][j].hasMine = true;
-            return true;
+        if (board[i][j].hasMine) {
+            return false;
         }
-        board[i][j].hasMine = false;
-        return false;
-    }
-
-    public boolean open(int i, int j) {
+        board[i][j].hasMine = true;
         return true;
     }
 
-    public void toggleFlag(int x, int y) {// FIXME: 31/05/2021 is the x and y is on purpose or can it be i and j?
+    public boolean open(int i, int j) {// TODO: 31/05/2021 finish the recursion
+        board[i][j].isOpen = true;
+
+        if (!board[i][j].hasMine) {
+            return true;
+        }
+
+        //north
+        if (open(i-1,j);
+        //north-east
+        open(i-1,j+1);
+        //east
+        open(i,j+1);
+
+        return false;
+    }
+
+    public void toggleFlag(int x, int y) {
         if (board[x][y].Flagged) {
             board[x][y].Flagged = false;
             return;
         }
         board[x][y].Flagged = true;
+    }
+
+    public boolean isDone() {
+        return false;
     }
 
     public String get(int i, int j) {
@@ -50,7 +76,7 @@ public class Mines {
     }
 
     public void setShowAll(boolean showAll) {
-
+        showAll = true;
     }
 
     @Override
@@ -65,11 +91,25 @@ public class Mines {
         return stringBoard.toString();
     }
 
-    private class Cell {
+    private static class Tile {
 
-        private boolean hasMine;
         private boolean isOpen;
+        private boolean hasMine;
         private boolean Flagged;
 
     }
 }
+
+//        if (!showAll) {
+//            return;
+//        }
+//
+//        Tile[][] boardCopy = new Tile[width][height];
+//
+//        for (int i = 0; i < width; i++) {
+//            boardCopy[i] = board[i];
+//            for (int j = 0; j < height; j++) {
+//                boardCopy[i][j].isOpen = true;
+//            }
+//        }
+//        boardCopy.toString();
