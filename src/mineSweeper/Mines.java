@@ -1,7 +1,5 @@
 package mineSweeper;
 
-import java.util.List;
-
 public class Mines {
 
     private int height;
@@ -33,20 +31,33 @@ public class Mines {
         return true;
     }
 
-    public boolean open(int i, int j) {// TODO: 31/05/2021 finish the recursion
+    public boolean open(int i, int j) {// TODO: 02/06/2021 check the recursion
+        //opens the tile
         board[i][j].isOpen = true;
 
+        // checks whether the current tile contains a mine????????????????????????????? WHAT?
         if (!board[i][j].hasMine) {
             return true;
         }
 
-        //north
-        if (open(i-1,j);
-        //north-east
-        open(i-1,j+1);
-        //east
-        open(i,j+1);
-
+        if (checkNeighbors(i, j) == 0) {
+            //north
+            open(i - 1, j);
+            //north - east
+            open(i - 1, j + 1);
+            //east
+            open(i, j + 1);
+            //south - east
+            open(i + 1, j + 1);
+            //south
+            open(i + 1, j);
+            //south - west
+            open(i + 1, j - 1);
+            //west
+            open(i, j - 1);
+            //north - west
+            open(i - 1, j - 1);
+        }
         return false;
     }
 
@@ -72,7 +83,53 @@ public class Mines {
         if (board[i][j].hasMine) {
             return "X";
         }
-        return "99";// FIXME: 31/05/2021 supposed to return the number of neighbors
+        return "" + checkNeighbors(i, j);
+    }
+
+    private int checkNeighbors(int i, int j) {
+        int neighbors = 0;
+
+        //north
+        if (i != 0 && board[i - 1][j].hasMine) {
+            neighbors++;
+        }
+
+        //north - east
+        if (i != 0 && j < width && board[i - 1][j + 1].hasMine) {
+            neighbors++;
+        }
+
+        //east
+        if (j < width && board[i][j + 1].hasMine) {
+            neighbors++;
+        }
+
+        //south - east
+        if (i < height && j < width && board[i + 1][j + 1].hasMine) {
+            neighbors++;
+        }
+
+        //south
+        if (i < height && board[i + 1][j].hasMine) {
+            neighbors++;
+        }
+
+        //south - west
+        if (i < height && j > 0 && board[i + 1][j - 1].hasMine) {
+            neighbors++;
+        }
+
+        //west
+        if (j > 0 && board[i][j - 1].hasMine) {
+            neighbors++;
+        }
+
+        //kim kardashian's son
+        if (i > 0 && j > 0 && board[i - 1][j - 1].hasMine) {
+            neighbors++;
+        }
+
+        return neighbors;
     }
 
     public void setShowAll(boolean showAll) {
@@ -96,10 +153,12 @@ public class Mines {
         private boolean isOpen;
         private boolean hasMine;
         private boolean Flagged;
+        private int bombsNearby;
 
     }
 }
 
+// creates a copy of the board so when its revealed the original "data" wont be overwritten
 //        if (!showAll) {
 //            return;
 //        }
