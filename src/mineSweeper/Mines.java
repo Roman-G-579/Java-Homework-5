@@ -35,12 +35,12 @@ public class Mines {
         //opens the tile
         board[i][j].isOpen = true;
 
-        // checks whether the current tile contains a mine????????????????????????????? WHAT?
-        if (!board[i][j].hasMine) {
-            return true;
+        //if the current tile has a mine, returns false
+        if (board[i][j].hasMine) {
+            return false;
         }
 
-        if (checkNeighbors(i, j) == 0) {
+        if (board[i][j].minesNearby != 0) {
             //north
             open(i - 1, j);
             //north - east
@@ -58,28 +58,32 @@ public class Mines {
             //north - west
             open(i - 1, j - 1);
         }
-        return false;
+        return true;
     }
 
     public void toggleFlag(int x, int y) {
-        if (board[x][y].Flagged) {
-            board[x][y].Flagged = false;
+        if (board[x][y].hasFlag) {
+            board[x][y].hasFlag = false;
             return;
         }
-        board[x][y].Flagged = true;
+        board[x][y].hasFlag = true;
     }
 
+    //checks whether the winning state has occurred
     public boolean isDone() {
         return false;
     }
 
+    //prints a string representation of the tile
     public String get(int i, int j) {
         if (!board[i][j].isOpen) {
-            if (board[i][j].Flagged) {
+            //if the tile contains a flag
+            if (board[i][j].hasFlag) {
                 return "F";
             }
             return ".";
         }
+        //if the tile contains a mine
         if (board[i][j].hasMine) {
             return "X";
         }
@@ -131,6 +135,7 @@ public class Mines {
             neighbors++;
         }
 
+        board[i][j].minesNearby = neighbors;
         return neighbors;
     }
 
@@ -152,10 +157,10 @@ public class Mines {
 
     private static class Tile {
 
-        private boolean isOpen;
         private boolean hasMine;
-        private boolean Flagged;
-        private int bombsNearby;
+        private boolean isOpen;
+        private boolean hasFlag;
+        private int minesNearby;
 
     }
 }
