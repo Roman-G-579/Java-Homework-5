@@ -1,4 +1,3 @@
-// 19472578
 package mineSweeper;
 
 import util.Tester;

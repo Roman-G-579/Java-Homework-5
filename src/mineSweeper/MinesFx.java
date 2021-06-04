@@ -1,16 +1,16 @@
 package mineSweeper;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class MinesFx extends Application {
+import java.io.IOException;
 
-    String content_Url = "<iframe width=\"560\" height=\"315\" " +
-            "src=\"https://www.youtube.com/embed/dQw4w9WgXcQ\"></iframe>";
+public class MinesFX extends Application {
+
 
     public static void main(String[] args) {
         launch(args);
@@ -18,17 +18,27 @@ public class MinesFx extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        WebView webView = new WebView();
-        WebEngine webEngine = webView.getEngine();
-        webEngine.loadContent(content_Url);
 
-        StackPane root = new StackPane();
-        root.getChildren().add(webView);
+        VBox vbox;
+        MineSweeperController controller;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("MineWindow.fxml"));
+            vbox = loader.load();
+            controller = loader.getController();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
 
-        Scene scene = new Scene(root, 580, 335);
+        Scene scene = new Scene(vbox);
 
-        primaryStage.setTitle("MineSweeper B-)");
+        primaryStage.setTitle("😎😎😎😎😎😎😎😎😎😎😎");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+//        Button resetButton = controller.resetGame();
+
     }
+
 }

@@ -84,8 +84,10 @@ public class Mines {
             return "X";
         }
         return "" + checkNeighbors(i, j);
+//        return Integer.toString(checkNeighbors(i, j));
     }
 
+    //checks the amount of mine adjacent to the tile
     private int checkNeighbors(int i, int j) {
         int neighbors = 0;
 
@@ -124,7 +126,7 @@ public class Mines {
             neighbors++;
         }
 
-        //kim kardashian's son
+        //north - west
         if (i > 0 && j > 0 && board[i - 1][j - 1].hasMine) {
             neighbors++;
         }
