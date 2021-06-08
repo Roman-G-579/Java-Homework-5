@@ -2,12 +2,9 @@ package mineSweeper;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class MinesFX extends Application {
 
@@ -19,25 +16,16 @@ public class MinesFX extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        VBox vbox;
-        MineSweeperController controller;
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("MineWindow.fxml"));
-            vbox = loader.load();
-            controller = loader.getController();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
+        MineSweeperController controller = new MineSweeperController();
 
-        Scene scene = new Scene(vbox);
+        Parent loader = FXMLLoader.load(getClass().getResource("MineWindow.fxml"));
+        Scene scene = new Scene(loader);
+
+
 
         primaryStage.setTitle("😎😎😎😎😎😎😎😎😎😎😎");
         primaryStage.setScene(scene);
         primaryStage.show();
-
-//        Button resetButton = controller.resetGame();
 
     }
 
