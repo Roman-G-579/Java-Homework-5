@@ -23,11 +23,13 @@ public class TwoArrays implements Iterable<Integer> {
             arrSize2--;
             index++;
         }
+        //adds the remainder of array1 to the list
         while (arrSize1 > 0) {
             list.add(a1[index]);
             index++;
             arrSize1--;
         }
+        //adds the remainder of array2 to the list
         while (arrSize2 > 0) {
             list.add(a2[index]);
             index++;

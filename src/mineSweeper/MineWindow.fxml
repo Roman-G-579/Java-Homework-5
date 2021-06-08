@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mineSweeper.MineSweeperController">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="149.0">
+         <children>
+            <Button fx:id="resetButton" layoutX="8.0" layoutY="134.0" mnemonicParsing="false" onAction="#newGame" prefHeight="25.0" prefWidth="117.0" text="Reset" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="183.0" prefHeight="17.0" prefWidth="39.0" text="width" textAlignment="CENTER" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="219.0" prefHeight="17.0" prefWidth="39.0" text="height" textAlignment="CENTER" />
+            <Label alignment="CENTER" layoutX="14.0" layoutY="253.0" prefHeight="17.0" prefWidth="39.0" text="mines" />
+            <TextField fx:id="widthController" layoutX="74.0" layoutY="179.0" prefHeight="25.0" prefWidth="50.0" />
+            <TextField fx:id="heightController" layoutX="74.0" layoutY="215.0" prefHeight="25.0" prefWidth="50.0" />
+            <TextField fx:id="minesController" layoutX="74.0" layoutY="250.0" prefHeight="25.0" prefWidth="50.0" />
+         </children>
+      </Pane>
+      <StackPane fx:id="gridlayout" prefHeight="150.0" prefWidth="528.0" />
+   </children>
+</HBox>

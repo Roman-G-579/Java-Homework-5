@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <excludeFromCompile>
       <directory url="file://$PROJECT_DIR$/src/iterator" includeSubdirectories="true" />
+      <directory url="file://$PROJECT_DIR$/src/mineSweeper" includeSubdirectories="true" />
     </excludeFromCompile>
   </component>
 </project>

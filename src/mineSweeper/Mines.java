@@ -23,6 +23,7 @@ public class Mines {
         }
     }
 
+    //adds a mine at the specified location on the board
     public boolean addMine(int i, int j) {
         if (board[i][j].hasMine) {
             return false;
@@ -61,6 +62,7 @@ public class Mines {
         return true;
     }
 
+    //places a flag on the specified tile
     public void toggleFlag(int x, int y) {
         if (board[x][y].hasFlag) {
             board[x][y].hasFlag = false;
