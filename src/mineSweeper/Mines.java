@@ -15,12 +15,22 @@ public class Mines {
 
         board = new Tile[height][width];
 
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                board[i][j] = new Tile();
+            }
+        }
+
         //adds the mines randomly to the board
         while (numMines != 0) {
             if (addMine((int) (Math.random() * height), (int) (Math.random() * width))) {
                 numMines--;
             }
         }
+    }
+
+    protected Tile getTile(int i, int j) {
+        return board[i][j];
     }
 
     //adds a mine at the specified location on the board
@@ -76,6 +86,7 @@ public class Mines {
         return false;
     }
 
+
     //prints a string representation of the tile
     public String get(int i, int j) {
         if (!board[i][j].isOpen) {
@@ -94,7 +105,7 @@ public class Mines {
     }
 
     //checks the amount of mine adjacent to the tile
-    private int checkNeighbors(int i, int j) {
+    private int checkNeighbors(int i, int j) { // TODO: 08/06/2021 fix the bounds problem
         int neighbors = 0;
 
         //north

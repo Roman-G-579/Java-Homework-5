@@ -5,7 +5,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mineSweeper.MineSweeperController">
    <children>
@@ -20,6 +19,6 @@
             <TextField fx:id="minesController" layoutX="74.0" layoutY="250.0" prefHeight="25.0" prefWidth="50.0" />
          </children>
       </Pane>
-      <StackPane fx:id="gridlayout" prefHeight="150.0" prefWidth="528.0" />
+      <Pane fx:id="gridLayout" prefHeight="480.0" prefWidth="499.0" />
    </children>
 </HBox>
