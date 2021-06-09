@@ -57,19 +57,19 @@ public class Mines {
                 //north
                 open(i - 1, j);
                 //north - east
-//                open(i - 1, j + 1);
-//                //east
-//                open(i, j + 1);
-//                //south - east
-//                open(i + 1, j + 1);
-//                //south
-//                open(i + 1, j);
-//                //south - west
-//                open(i + 1, j - 1);
-//                //west
-//                open(i, j - 1);
-//                //north - west
-//                open(i - 1, j - 1);
+                open(i - 1, j + 1);
+                //east
+                open(i, j + 1);
+                //south - east
+                open(i + 1, j + 1);
+                //south
+                open(i + 1, j);
+                //south - west
+                open(i + 1, j - 1);
+                //west
+                open(i, j - 1);
+                //north - west
+                open(i - 1, j - 1);
             }
         }
         return true;
@@ -106,14 +106,13 @@ public class Mines {
 
         String neighbors = Integer.toString(checkNeighbors(i, j));
         if (neighbors.equals("0")) {
-            neighbors = " ";
+            neighbors = "";
         }
         return neighbors;
-//        return Integer.toString(checkNeighbors(i, j));
     }
 
     //checks the amount of mine adjacent to the tile
-    private int checkNeighbors(int i, int j) { // TODO: 08/06/2021 fix the bounds problem
+    private int checkNeighbors(int i, int j) {
         int neighbors = 0;
 
         //north
