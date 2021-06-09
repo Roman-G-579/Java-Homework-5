@@ -8,7 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 
-public class MineSweeperController {
+public class MineController {
 
     @FXML
     private Button resetButton;
@@ -52,14 +52,26 @@ public class MineSweeperController {
                 int finalJ = j;
                 button.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
                     if (e.isPrimaryButtonDown()) {
+                        button.setStyle("");
                         game.open(finalI, finalJ);
+                        if (game.getTile(finalI, finalJ).isHasMine()) {
+                            button.setStyle("-fx-background-color: RED");
+                        }
                     }
                     if (e.isSecondaryButtonDown()) {
                         game.toggleFlag(finalI, finalJ);
+                        if (!game.getTile(finalI, finalJ).isOpen()) {
+                            if (game.getTile(finalI, finalJ).isHasFlag()) {
+                                button.setStyle("-fx-background-color: GREEN");
+                            }
+                            if (!game.getTile(finalI, finalJ).isHasFlag()) {
+                                button.setStyle("");
+                            }
+                        }
                     }
                     button.setText(game.get(finalI, finalJ));
                 });
-                gridPane.add(button, i, j);
+                gridPane.add(button, j, i);
             }
         }
         gridLayout.getChildren().add(gridPane);

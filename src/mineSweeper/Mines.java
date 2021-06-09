@@ -51,23 +51,26 @@ public class Mines {
             return false;
         }
 
-        if (board[i][j].minesNearby != 0) {
-            //north
-            open(i - 1, j);
-            //north - east
-            open(i - 1, j + 1);
-            //east
-            open(i, j + 1);
-            //south - east
-            open(i + 1, j + 1);
-            //south
-            open(i + 1, j);
-            //south - west
-            open(i + 1, j - 1);
-            //west
-            open(i, j - 1);
-            //north - west
-            open(i - 1, j - 1);
+        if (board[i][j].minesNearby == 0) {
+
+            if (i > 0 && i < height - 1 && j > 0 && j < width - 1) {
+                //north
+                open(i - 1, j);
+                //north - east
+//                open(i - 1, j + 1);
+//                //east
+//                open(i, j + 1);
+//                //south - east
+//                open(i + 1, j + 1);
+//                //south
+//                open(i + 1, j);
+//                //south - west
+//                open(i + 1, j - 1);
+//                //west
+//                open(i, j - 1);
+//                //north - west
+//                open(i - 1, j - 1);
+            }
         }
         return true;
     }
@@ -100,7 +103,12 @@ public class Mines {
         if (board[i][j].hasMine) {
             return "X";
         }
-        return "" + checkNeighbors(i, j);
+
+        String neighbors = Integer.toString(checkNeighbors(i, j));
+        if (neighbors.equals("0")) {
+            neighbors = " ";
+        }
+        return neighbors;
 //        return Integer.toString(checkNeighbors(i, j));
     }
 
@@ -114,27 +122,27 @@ public class Mines {
         }
 
         //north - east
-        if (i != 0 && j < width && board[i - 1][j + 1].hasMine) {
+        if (i != 0 && j < width - 1 && board[i - 1][j + 1].hasMine) {
             neighbors++;
         }
 
         //east
-        if (j < width && board[i][j + 1].hasMine) {
+        if (j < width - 1 && board[i][j + 1].hasMine) {
             neighbors++;
         }
 
         //south - east
-        if (i < height && j < width && board[i + 1][j + 1].hasMine) {
+        if (i < height - 1 && j < width - 1 && board[i + 1][j + 1].hasMine) {
             neighbors++;
         }
 
         //south
-        if (i < height && board[i + 1][j].hasMine) {
+        if (i < height - 1 && board[i + 1][j].hasMine) {
             neighbors++;
         }
 
         //south - west
-        if (i < height && j > 0 && board[i + 1][j - 1].hasMine) {
+        if (i < height - 1 && j > 0 && board[i + 1][j - 1].hasMine) {
             neighbors++;
         }
 
@@ -168,13 +176,28 @@ public class Mines {
         return stringBoard.toString();
     }
 
-    private static class Tile {
+    protected static class Tile {
 
         private boolean hasMine;
         private boolean isOpen;
         private boolean hasFlag;
         private int minesNearby;
 
+        public boolean isHasMine() {
+            return hasMine;
+        }
+
+        public boolean isOpen() {
+            return isOpen;
+        }
+
+        public boolean isHasFlag() {
+            return hasFlag;
+        }
+
+        public int getMinesNearby() {
+            return minesNearby;
+        }
     }
 }
 

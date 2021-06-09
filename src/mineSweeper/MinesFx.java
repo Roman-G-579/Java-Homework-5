@@ -16,12 +16,10 @@ public class MinesFX extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        MineSweeperController controller = new MineSweeperController();
+        MineController controller = new MineController();
 
-        Parent loader = FXMLLoader.load(getClass().getResource("MineWindow.fxml"));
-        Scene scene = new Scene(loader);
-
-
+        Parent root = FXMLLoader.load(getClass().getResource("MineWindow.fxml"));
+        Scene scene = new Scene(root);
 
         primaryStage.setTitle("😎😎😎😎😎😎😎😎😎😎😎");
         primaryStage.setScene(scene);
