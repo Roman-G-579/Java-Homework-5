@@ -30,18 +30,11 @@ public class MineController {
 
         GridPane gridPane = new GridPane();
 
-        if (!gridPane.getChildren().isEmpty()) {// TODO: 08/06/2021 remove existing gridpane
-            for (int i = 0; i < gridPane.getRowCount(); i++) {
-
-            }
-        }
-
         int height = Integer.parseInt(heightController.getText());
         int width = Integer.parseInt(widthController.getText());
         int numOfMines = Integer.parseInt(minesController.getText());
 
         Mines game = new Mines(height, width, numOfMines);
-
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -51,9 +44,15 @@ public class MineController {
                 int finalI = i;
                 int finalJ = j;
                 button.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
-                    if (e.isPrimaryButtonDown()) {
+                    if (e.isPrimaryButtonDown() && !game.getTile(finalI, finalJ).isOpen()) {
                         button.setStyle("");
                         game.open(finalI, finalJ);
+                        for (int k = 0; k < height; k++) {
+                            for (int l = 0; l < width; l++) {
+                                Button button1 = (Button) gridPane.getChildren().get(10 * k + l);
+                                button1.setText(game.get(k, l));
+                            }
+                        }
                         if (game.getTile(finalI, finalJ).isHasMine()) {
                             button.setStyle("-fx-background-color: RED");
                         }
@@ -69,6 +68,7 @@ public class MineController {
                             }
                         }
                     }
+                    System.out.println(game);
                     button.setText(game.get(finalI, finalJ));
                 });
                 gridPane.add(button, j, i);

@@ -42,34 +42,35 @@ public class Mines {
         return true;
     }
 
-    public boolean open(int i, int j) {// TODO: 02/06/2021 check the recursion
-        //opens the tile
-        board[i][j].isOpen = true;
-
+    public boolean open(int i, int j) {// TODO: 10/06/2021 fix the conditions in the loop
+        if (board[i][j].isOpen) {
+            return true;
+        }
         //if the current tile has a mine, returns false
         if (board[i][j].hasMine) {
             return false;
         }
 
-        if (board[i][j].minesNearby == 0) {
+        //opens the tile
+        board[i][j].isOpen = true;
 
-            if (i > 0 && i < height - 1 && j > 0 && j < width - 1) {
-                //north
+
+        if (board[i][j].minesNearby == 0) {
+            //north
+            if (i - 1 >= 0) {
                 open(i - 1, j);
-                //north - east
-                open(i - 1, j + 1);
-                //east
+            }
+            //east
+            if (j < width - 1) {
                 open(i, j + 1);
-                //south - east
-                open(i + 1, j + 1);
-                //south
+            }
+            //south
+            if (i < height - 1) {
                 open(i + 1, j);
-                //south - west
-                open(i + 1, j - 1);
-                //west
+            }
+            //west
+            if (j - 1 >= 0) {
                 open(i, j - 1);
-                //north - west
-                open(i - 1, j - 1);
             }
         }
         return true;
@@ -86,29 +87,39 @@ public class Mines {
 
     //checks whether the winning state has occurred
     public boolean isDone() {
-        return false;
+        int counter = 0;
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (!board[i][j].hasMine) {
+                    counter++;
+                }
+            }
+        }
+        return counter == (width * height) - numMines;
     }
 
-
     //prints a string representation of the tile
-    public String get(int i, int j) {
-        if (!board[i][j].isOpen) {
-            //if the tile contains a flag
-            if (board[i][j].hasFlag) {
-                return "F";
-            }
-            return ".";
-        }
-        //if the tile contains a mine
-        if (board[i][j].hasMine) {
+    public String get(int i, int j) { //TODO: add showAll handling
+
+        if (board[i][j].isOpen() && board[i][j].isHasMine()) {
             return "X";
         }
-
-        String neighbors = Integer.toString(checkNeighbors(i, j));
-        if (neighbors.equals("0")) {
-            neighbors = "";
+        if (board[i][j].isOpen() && !board[i][j].isHasMine()) {
+            String neighbors = Integer.toString(checkNeighbors(i, j));
+            if (neighbors.equals("0")) {
+                return " ";
+            }
+            return neighbors;
         }
-        return neighbors;
+        if (!board[i][j].isOpen() && board[i][j].isHasFlag()) {
+            return "F";
+        }
+        if (!board[i][j].isOpen() && !board[i][j].isHasFlag()) {
+            return ".";
+        }
+
+        throw new IndexOutOfBoundsException();
     }
 
     //checks the amount of mine adjacent to the tile
@@ -171,6 +182,7 @@ public class Mines {
             for (int j = 0; j < width; j++) {
                 stringBoard.append(get(i, j));
             }
+            stringBoard.append("\n");
         }
         return stringBoard.toString();
     }
@@ -192,10 +204,6 @@ public class Mines {
 
         public boolean isHasFlag() {
             return hasFlag;
-        }
-
-        public int getMinesNearby() {
-            return minesNearby;
         }
     }
 }
