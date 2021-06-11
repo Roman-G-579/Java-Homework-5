@@ -1,4 +1,4 @@
-package mineSweeper;
+package mines;
 
 public class Mines {
 
@@ -42,25 +42,25 @@ public class Mines {
         return true;
     }
 
-    public boolean open(int i, int j) {// TODO: 10/06/2021 fix the conditions in the loop
-        if (board[i][j].isOpen) {
-            return true;
-        }
-        //if the current tile has a mine, returns false
-        if (board[i][j].hasMine) {
+    public boolean open(int i, int j) {
+        if (board[i][j].isOpen || board[i][j].hasFlag) {
             return false;
         }
 
         //opens the tile
         board[i][j].isOpen = true;
 
+        //if the current tile has a mine, returns false
+        if (board[i][j].isHasMine()) {
+            return false;
+        }
 
-        if (board[i][j].minesNearby == 0) {
+        if (checkNeighbors(i, j) == 0) {
             //north
             if (i - 1 >= 0) {
                 open(i - 1, j);
             }
-            //east
+//            //east
             if (j < width - 1) {
                 open(i, j + 1);
             }
@@ -118,8 +118,7 @@ public class Mines {
         if (!board[i][j].isOpen() && !board[i][j].isHasFlag()) {
             return ".";
         }
-
-        throw new IndexOutOfBoundsException();
+        throw new IllegalArgumentException();
     }
 
     //checks the amount of mine adjacent to the tile
@@ -207,18 +206,3 @@ public class Mines {
         }
     }
 }
-
-// creates a copy of the board so when its revealed the original "data" wont be overwritten
-//        if (!showAll) {
-//            return;
-//        }
-//
-//        Tile[][] boardCopy = new Tile[width][height];
-//
-//        for (int i = 0; i < width; i++) {
-//            boardCopy[i] = board[i];
-//            for (int j = 0; j < height; j++) {
-//                boardCopy[i][j].isOpen = true;
-//            }
-//        }
-//        boardCopy.toString();

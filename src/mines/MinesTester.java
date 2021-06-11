@@ -1,17 +1,22 @@
-package mineSweeper;
+package mines;
 
 import util.Tester;
 
 public class MinesTester extends Tester {
 
+    public static void main(String[] args) {
+        new MinesTester().myMain("mines");
+    }
 
     void testMines1() {
         initPublishedTest("4X4 board, mine at (0,0)");
         Mines m = new Mines(4, 4, 0);
         m.addMine(0, 0);
         checkEqStr(m, "....\n....\n....\n....\n", "clear board");
+        System.out.println(m);
         check(!m.isDone(), "Should not win yet!");
         m.open(3, 3);
+        System.out.println(m);
         checkEqStr(m, ".1  \n11  \n    \n    \n", "after open(3,3)");
         check(m.isDone(), "Should win after open(3,3).");
     }
@@ -27,6 +32,8 @@ public class MinesTester extends Tester {
         checkEqStr(m, "  \n11\n..\n", "after open(0,1), open(2,1)");
         m.setShowAll(true);
     }
+
+    // ------------------------------------------------------------
 
     void testMines3() {
         initPublishedTest("4X4 board, mine at (1,1), (2,3), (3,3)");
@@ -50,12 +57,6 @@ public class MinesTester extends Tester {
         checkEqStr(m, "....\n..2.\n113.\n  2.\n",
                 "after open(2,2), open(3,0), " + "setShowAll(true), open(1,2), setShowAll(false)");
         check(!m.isDone(), "should not win yet.");
-    }
-
-    // ------------------------------------------------------------
-
-    public static void main(String[] args) {
-        new MinesTester().myMain("mines");
     }
 
     // ------------------------------------------------------------
