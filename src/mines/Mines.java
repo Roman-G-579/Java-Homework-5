@@ -4,14 +4,13 @@ public class Mines {
 
     private int height;
     private int width;
-    private int numMines;
-    private boolean showAll;
+    private int minesOnBoard;
+    private boolean showAllField;
     private Tile[][] board;
 
     public Mines(int height, int width, int numMines) {
         this.height = height;
         this.width = width;
-        this.numMines = numMines;
 
         board = new Tile[height][width];
 
@@ -39,6 +38,7 @@ public class Mines {
             return false;
         }
         board[i][j].hasMine = true;
+        minesOnBoard++;
         return true;
     }
 
@@ -50,7 +50,6 @@ public class Mines {
         //opens the tile
         board[i][j].isOpen = true;
 
-        //if the current tile has a mine, returns false
         if (board[i][j].isHasMine()) {
             return false;
         }
@@ -60,17 +59,33 @@ public class Mines {
             if (i - 1 >= 0) {
                 open(i - 1, j);
             }
+            //north-east
+            if (i - 1 >= 0 && j + 1 < width) {
+                open(i - 1, j + 1);
+            }
 //            //east
             if (j < width - 1) {
                 open(i, j + 1);
+            }
+            //south - east
+            if (i + 1 < height && j + 1 < width) {
+                open(i + 1, j + 1);
             }
             //south
             if (i < height - 1) {
                 open(i + 1, j);
             }
+            //south - west
+            if (i + 1 < height && j - 1 >= 0) {
+                open(i + 1, j - 1);
+            }
             //west
             if (j - 1 >= 0) {
                 open(i, j - 1);
+            }
+            //north - west
+            if (i - 1 >= 0 && j - 1 >= 0) {
+                open(i - 1, j - 1);
             }
         }
         return true;
@@ -91,26 +106,25 @@ public class Mines {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (!board[i][j].hasMine) {
+                if (!board[i][j].isOpen()) {
                     counter++;
                 }
             }
         }
-        return counter == (width * height) - numMines;
+        return counter == minesOnBoard;
     }
 
     //prints a string representation of the tile
-    public String get(int i, int j) { //TODO: add showAll handling
-
-        if (board[i][j].isOpen() && board[i][j].isHasMine()) {
-            return "X";
-        }
-        if (board[i][j].isOpen() && !board[i][j].isHasMine()) {
-            String neighbors = Integer.toString(checkNeighbors(i, j));
-            if (neighbors.equals("0")) {
+    public String get(int i, int j) {
+        if (board[i][j].isOpen() || showAllField) {
+            if (board[i][j].isHasMine()) {
+                return "X";
+            }
+            checkNeighbors(i, j);
+            if (board[i][j].getMinesNearby() == 0) {
                 return " ";
             }
-            return neighbors;
+            return Integer.toString(board[i][j].getMinesNearby());
         }
         if (!board[i][j].isOpen() && board[i][j].isHasFlag()) {
             return "F";
@@ -170,7 +184,7 @@ public class Mines {
     }
 
     public void setShowAll(boolean showAll) {
-        showAll = true;
+        showAllField = showAll;
     }
 
     @Override
@@ -193,6 +207,10 @@ public class Mines {
         private boolean hasFlag;
         private int minesNearby;
 
+        public int getMinesNearby() {
+            return minesNearby;
+        }
+
         public boolean isHasMine() {
             return hasMine;
         }
@@ -206,3 +224,26 @@ public class Mines {
         }
     }
 }
+
+
+/*public String get(int i, int j) { //TODO: add showAll handling
+
+        if (board[i][j].isOpen() && board[i][j].isHasMine()) {
+            return "X";
+        }
+        if (board[i][j].isOpen() && !board[i][j].isHasMine()) {
+            String neighbors = Integer.toString(checkNeighbors(i, j));
+            if (neighbors.equals("0")) {
+                return " ";
+            }
+            return neighbors;
+        }
+        if (!board[i][j].isOpen() && board[i][j].isHasFlag()) {
+            return "F";
+        }
+        if (!board[i][j].isOpen() && !board[i][j].isHasFlag()) {
+            return ".";
+        }
+
+        throw new IllegalArgumentException();
+    }*/

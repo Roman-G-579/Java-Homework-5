@@ -1,7 +1,6 @@
 package mines;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -13,50 +12,38 @@ import javafx.scene.layout.Pane;
 
 public class MineController {
 
+    GridPane gridPane = new GridPane();
     @FXML
     private Button resetButton;
-
     @FXML
     private TextField widthController;
-
     @FXML
     private TextField heightController;
-
     @FXML
     private TextField minesController;
-
     @FXML
     private Pane gridLayout;
 
     @FXML
     void newGame(ActionEvent event) {
+        gridPane.getChildren().clear();
 
-        Image image = new Image(getClass().getResourceAsStream("flag.png"),
-                20, 20, false, false);
 
-        GridPane gridPane = new GridPane();
+        Image mineImage = new Image(getClass().getResourceAsStream("mine.png"),
+                24, 24, false, false);
+        Image flagImage = new Image(getClass().getResourceAsStream("flag.png"),
+                24, 24, false, false);
+        Image diggedDirt = new Image(getClass().getResourceAsStream("digged.png"),
+                24, 24, false, false);
 
+        gridPane = new GridPane();
 
         int height = Integer.parseInt(heightController.getText());
         int width = Integer.parseInt(widthController.getText());
         int numOfMines = Integer.parseInt(minesController.getText());
 
-        resetButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                gridPane.getChildren().clear();
-                Mines game = new Mines(height, width, numOfMines);
-                game(image, game, height, width, numOfMines);
-            }
-        });
-
         Mines game = new Mines(height, width, numOfMines);
-        game(image, game, height, width, numOfMines);
 
-    }
-
-    void game(Image image, Mines game, int height, int width, int numOfMines) {
-        GridPane gridPane = new GridPane();
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
@@ -72,7 +59,7 @@ public class MineController {
 
                         //if the current tile contains a mine, paints it red
                         if (game.getTile(reserveI, reserveJ).isHasMine()) {
-                            button.setStyle("-fx-background-color: RED");
+                            button.setGraphic(new ImageView(mineImage));
                         }
                     }
                     if (e.isSecondaryButtonDown()) {
@@ -81,31 +68,34 @@ public class MineController {
                             //if right clicked on the tile, colors the tile green or clears the color
                             if (game.getTile(reserveI, reserveJ).isHasFlag()) {
                                 //adds to the current tile an image of a flag
-                                button.setGraphic(new ImageView(image));
+                                button.setGraphic(new ImageView(flagImage));
                             } else {
                                 //clears the image of the flag from the tile
                                 button.setGraphic(null);
                             }
                         }
                     }
-                    System.out.println(game);
                     for (int k = 0; k < height; k++) {
                         for (int l = 0; l < width; l++) {
                             Button currentButton = (Button) gridPane.getChildren().get(height * k + l);
                             currentButton.setText(game.get(k, l));
-                            if (currentButton.getText().equals("F")) {
+                            if (currentButton.getText().equals("F") || currentButton.getText().equals("X")) {
                                 currentButton.setText("");
                             }
                             if (!currentButton.getText().equals(".") && !currentButton.getText().equals("X")
                                     && !currentButton.getText().equals("")) {
                                 currentButton.setStyle("-fx-background-color: BURLYWOOD");
                             }
+                            if (currentButton.getText().equals(" ")) {
+                                currentButton.setGraphic(new ImageView(diggedDirt));
+                                currentButton.setText("");
+                            }
                         }
                     }
                     System.out.println(game);
                 });
                 gridPane.add(button, j, i);
-                if (game.isDone()){
+                if (game.isDone()) {
                     System.out.println("YOU WON! the G.O.A.T is in the house");
                 }
             }
