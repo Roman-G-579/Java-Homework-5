@@ -2,6 +2,7 @@ package mines;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -12,7 +13,7 @@ import javafx.scene.layout.Pane;
 
 public class MineController {
 
-    GridPane gridPane = new GridPane();
+    private GridPane gridPane = new GridPane();
     @FXML
     private Button resetButton;
     @FXML
@@ -28,12 +29,21 @@ public class MineController {
     void newGame(ActionEvent event) {
         gridPane.getChildren().clear();
 
+        Alert winMsg = new Alert(Alert.AlertType.INFORMATION);
+        winMsg.setTitle("Congratulations!!!!");
+        winMsg.setHeaderText(null);
+        winMsg.setContentText("WOW you won, you are the best");
+        winMsg.setGraphic(new ImageView(this.getClass().getResource("coolBig.png").toString()));
+
+        Alert loseMsg = new Alert(Alert.AlertType.INFORMATION);
+        loseMsg.setTitle("Congratulations!!!!");
+        loseMsg.setHeaderText(null);
+        loseMsg.setContentText("WOW you won, you are the best");
+        loseMsg.setGraphic(new ImageView(this.getClass().getResource("loseBig.png").toString()));
 
         Image mineImage = new Image(getClass().getResourceAsStream("mine.png"),
                 24, 24, false, false);
         Image flagImage = new Image(getClass().getResourceAsStream("flag.png"),
-                24, 24, false, false);
-        Image diggedDirt = new Image(getClass().getResourceAsStream("digged.png"),
                 24, 24, false, false);
 
         gridPane = new GridPane();
@@ -44,10 +54,10 @@ public class MineController {
 
         Mines game = new Mines(height, width, numOfMines);
 
-
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 Button button = new Button();
+                button.setStyle("-fx-background-color: WHEAT");
                 button.setText(".");
                 button.setPrefSize(40, 40);
                 int reserveI = i;
@@ -57,18 +67,17 @@ public class MineController {
                     if (e.isPrimaryButtonDown() && !game.getTile(reserveI, reserveJ).isOpen()) {
                         game.open(reserveI, reserveJ);
 
-                        //if the current tile contains a mine, paints it red
                         if (game.getTile(reserveI, reserveJ).isHasMine()) {
-                            button.setGraphic(new ImageView(mineImage));
+//                            button.setGraphic(new ImageView(mineImage));
                         }
                     }
                     if (e.isSecondaryButtonDown()) {
                         game.toggleFlag(reserveI, reserveJ);
                         if (!game.getTile(reserveI, reserveJ).isOpen()) {
-                            //if right clicked on the tile, colors the tile green or clears the color
+                            //if right clicked on the tile
                             if (game.getTile(reserveI, reserveJ).isHasFlag()) {
                                 //adds to the current tile an image of a flag
-                                button.setGraphic(new ImageView(flagImage));
+//                                button.setGraphic(new ImageView(flagImage));
                             } else {
                                 //clears the image of the flag from the tile
                                 button.setGraphic(null);
@@ -79,16 +88,35 @@ public class MineController {
                         for (int l = 0; l < width; l++) {
                             Button currentButton = (Button) gridPane.getChildren().get(height * k + l);
                             currentButton.setText(game.get(k, l));
-                            if (currentButton.getText().equals("F") || currentButton.getText().equals("X")) {
+
+                            //if the current button is a mine
+                            if (currentButton.getText().equals("X")) {
                                 currentButton.setText("");
+                                currentButton.setStyle("-fx-background-color: WHEAT");
+                                currentButton.setGraphic(new ImageView(mineImage));
                             }
-                            if (!currentButton.getText().equals(".") && !currentButton.getText().equals("X")
-                                    && !currentButton.getText().equals("")) {
-                                currentButton.setStyle("-fx-background-color: BURLYWOOD");
+
+                            //if the current button is a flag
+                            if (currentButton.getText().equals("F")) {
+                                currentButton.setText("");
+                                currentButton.setStyle("-fx-background-color: WHEAT");
+                                currentButton.setGraphic(new ImageView(flagImage));
                             }
+
+                            //if the current button is an open space
                             if (currentButton.getText().equals(" ")) {
-                                currentButton.setGraphic(new ImageView(diggedDirt));
-                                currentButton.setText("");
+                                currentButton.setStyle("-fx-background-color: CORNSILK");
+                            }
+
+                            //if the current button is a closed one
+                            if (!currentButton.getText().equals("F") && !currentButton.getText().equals("X")) {
+                                currentButton.setStyle("-fx-background-color: WHEAT");
+                            }
+
+                            //if the current button is open but not a flag, mine or a dot
+                            if (!currentButton.getText().equals("F") && !currentButton.getText().equals("X")
+                                    && !currentButton.getText().equals(".")) {
+                                currentButton.setStyle("-fx-background-color: CORNSILK");
                             }
                         }
                     }
@@ -96,7 +124,7 @@ public class MineController {
                 });
                 gridPane.add(button, j, i);
                 if (game.isDone()) {
-                    System.out.println("YOU WON! the G.O.A.T is in the house");
+                    winMsg.showAndWait();
                 }
             }
         }

@@ -47,12 +47,12 @@ public class Mines {
             return false;
         }
 
+        if (board[i][j].isHasMine()) {
+            setShowAll(true);
+        }
+
         //opens the tile
         board[i][j].isOpen = true;
-
-        if (board[i][j].isHasMine()) {
-            return false;
-        }
 
         if (checkNeighbors(i, j) == 0) {
             //north
@@ -106,12 +106,12 @@ public class Mines {
 
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (!board[i][j].isOpen()) {
+                if (board[i][j].isOpen()) {
                     counter++;
                 }
             }
         }
-        return counter == minesOnBoard;
+        return counter == (width * height) - minesOnBoard;
     }
 
     //prints a string representation of the tile
