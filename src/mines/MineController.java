@@ -38,7 +38,7 @@ public class MineController {
         Alert loseMsg = new Alert(Alert.AlertType.INFORMATION);
         loseMsg.setTitle("Congratulations!!!!");
         loseMsg.setHeaderText(null);
-        loseMsg.setContentText("WOW you won, you are the best");
+        loseMsg.setContentText("ohh no, you lost");
         loseMsg.setGraphic(new ImageView(this.getClass().getResource("loseBig.png").toString()));
 
         Image mineImage = new Image(getClass().getResourceAsStream("mine.png"),
@@ -69,9 +69,11 @@ public class MineController {
                     //checks whether the left mouse or the right mouse button has been clicked
                     if (e.isPrimaryButtonDown() && !game.getTile(reserveI, reserveJ).isOpen()) {
                         game.open(reserveI, reserveJ);
-
+                        if (game.getTile(reserveI, reserveJ).isHasMine()) {
+                            loseMsg.showAndWait();
+                        }
                         //checks whether the game is won
-                        if (game.isDone()) {
+                        else if (game.isDone()) {
                             winMsg.showAndWait();
                         }
                     }
