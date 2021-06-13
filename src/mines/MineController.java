@@ -57,9 +57,12 @@ public class MineController {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 Button button = new Button();
+
+                //sets the button's style
                 button.setStyle("-fx-background-color: WHEAT");
                 button.setText(".");
                 button.setPrefSize(40, 40);
+
                 int reserveI = i;
                 int reserveJ = j;
                 button.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> {
@@ -67,23 +70,21 @@ public class MineController {
                     if (e.isPrimaryButtonDown() && !game.getTile(reserveI, reserveJ).isOpen()) {
                         game.open(reserveI, reserveJ);
 
-                        if (game.getTile(reserveI, reserveJ).isHasMine()) {
-//                            button.setGraphic(new ImageView(mineImage));
+                        //checks whether the game is won
+                        if (game.isDone()) {
+                            winMsg.showAndWait();
                         }
                     }
                     if (e.isSecondaryButtonDown()) {
-                        game.toggleFlag(reserveI, reserveJ);
-                        if (!game.getTile(reserveI, reserveJ).isOpen()) {
-                            //if right clicked on the tile
-                            if (game.getTile(reserveI, reserveJ).isHasFlag()) {
-                                //adds to the current tile an image of a flag
-//                                button.setGraphic(new ImageView(flagImage));
-                            } else {
-                                //clears the image of the flag from the tile
-                                button.setGraphic(null);
-                            }
+                        if (!game.getTile(reserveI, reserveJ).isHasFlag()) {
+                            button.setGraphic(new ImageView(flagImage));
                         }
+                        if (game.getTile(reserveI, reserveJ).isHasFlag()) {
+                            button.setGraphic(null);
+                        }
+                        game.toggleFlag(reserveI, reserveJ);
                     }
+
                     for (int k = 0; k < height; k++) {
                         for (int l = 0; l < width; l++) {
                             Button currentButton = (Button) gridPane.getChildren().get(height * k + l);
@@ -123,9 +124,6 @@ public class MineController {
                     System.out.println(game);
                 });
                 gridPane.add(button, j, i);
-                if (game.isDone()) {
-                    winMsg.showAndWait();
-                }
             }
         }
         gridLayout.getChildren().add(gridPane);
