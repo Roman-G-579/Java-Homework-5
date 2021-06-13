@@ -29,22 +29,25 @@ public class MineController {
     void newGame(ActionEvent event) {
         gridPane.getChildren().clear();
 
+        Image mineImage = new Image(getClass().getResourceAsStream("mine.png"),
+                24, 24, false, false);
+        Image flagImage = new Image(getClass().getResourceAsStream("flag.png"),
+                24, 24, false, false);
+        Image coolBig = new Image(getClass().getResourceAsStream("coolBig.png"));
+        Image loseBig = new Image(getClass().getResourceAsStream("loseBig.png"));
+
         Alert winMsg = new Alert(Alert.AlertType.INFORMATION);
         winMsg.setTitle("Congratulations!!!!");
         winMsg.setHeaderText(null);
         winMsg.setContentText("WOW you won, you are the best");
-        winMsg.setGraphic(new ImageView(this.getClass().getResource("coolBig.png").toString()));
+        winMsg.setGraphic(new ImageView(coolBig));
 
         Alert loseMsg = new Alert(Alert.AlertType.INFORMATION);
         loseMsg.setTitle("Congratulations!!!!");
         loseMsg.setHeaderText(null);
         loseMsg.setContentText("ohh no, you lost");
-        loseMsg.setGraphic(new ImageView(this.getClass().getResource("loseBig.png").toString()));
+        loseMsg.setGraphic(new ImageView(loseBig));
 
-        Image mineImage = new Image(getClass().getResourceAsStream("mine.png"),
-                24, 24, false, false);
-        Image flagImage = new Image(getClass().getResourceAsStream("flag.png"),
-                24, 24, false, false);
 
         gridPane = new GridPane();
 
