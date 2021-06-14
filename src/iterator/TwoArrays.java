@@ -1,40 +1,14 @@
 package iterator;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class TwoArrays implements Iterable<Integer> {
 
-    private List<Integer> list;
+    private int[] a1, a2;
 
     public TwoArrays(int[] a1, int[] a2) {
-        int arrSize1 = a1.length;
-        int arrSize2 = a2.length;
-        int index = 0;
-        list = new ArrayList<>();
-
-        //if both of the arrays are not empty yet,
-        //iterates between them when adding elements to the list
-        while (arrSize1 > 0 && arrSize2 > 0) {
-            list.add(a1[index]);
-            list.add(a2[index]);
-            arrSize1--;
-            arrSize2--;
-            index++;
-        }
-        //adds the remainder of array1 to the list
-        while (arrSize1 > 0) {
-            list.add(a1[index]);
-            index++;
-            arrSize1--;
-        }
-        //adds the remainder of array2 to the list
-        while (arrSize2 > 0) {
-            list.add(a2[index]);
-            index++;
-            arrSize2--;
-        }
+        this.a1 = a1;
+        this.a2 = a2;
     }
 
     @Override
@@ -43,18 +17,51 @@ public class TwoArrays implements Iterable<Integer> {
     }
 
     private class CustomIterator implements Iterator<Integer> {
-        private int index;
+        private int a1Index;
+        private int a2Index;
+        private boolean a1Next;
+        private boolean a1finished;
+        private boolean a2finished;
 
         @Override
         public boolean hasNext() {
-            return index < list.size();
+
+            //both arrays have at least one more number in them
+            if (a1Index < a1.length && a2Index < a2.length) {
+                return true;
+            }
+
+            //the first array is finished
+            if (a1Index == a1.length && a2Index < a2.length) {
+                a1finished = true;
+                return true;
+            }
+
+            //the second array is finished
+            if (a1Index < a1.length && a2Index == a2.length) {
+                a2finished = true;
+                return true;
+            }
+
+            //both arrays have finished
+            if (a1.length == a1Index && a2.length == a2Index) {
+                return false;
+            }
+
+            throw new IllegalArgumentException();
         }
 
         @Override
         public Integer next() {
-            Integer val = list.get(index);
-            index++;
-            return val;
+            a1Next = !a1Next;
+
+            //if its a1's turn and it hasn't finished yet, or a2 is finished
+            if ((!a1Next && !a2finished) || a1finished) {
+                return a2[a2Index++];
+            }
+
+            //its a2's turn and it hasn't finished yet, or a1 is finished
+            return a1[a1Index++];
         }
     }
 }

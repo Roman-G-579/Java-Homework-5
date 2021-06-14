@@ -121,6 +121,6 @@ public class IteratorTester extends IteratorTesterBase {
 		testTwoArrays();
 		testTwoArrays2();
 		testCombined();
-//		testInfinite();
+		testInfinite();
 	}
 }
