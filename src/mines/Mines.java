@@ -195,8 +195,8 @@ public class Mines {
         int biggerLen;
 
 
-        biggerLen = height >= width ? height : width;
-        smallerLen = width < height ? width : height;
+        biggerLen = Math.max(width, height);
+        smallerLen = Math.min(width,height);
 
         for (int i = 0; i < biggerLen; i++) {
             for (int j = 0; j < smallerLen; j++) {
