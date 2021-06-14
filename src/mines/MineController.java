@@ -73,6 +73,7 @@ public class MineController {
                     if (e.isPrimaryButtonDown() && !game.getTile(reserveI, reserveJ).isOpen()) {
                         game.open(reserveI, reserveJ);
                         if (game.getTile(reserveI, reserveJ).isHasMine()) {
+                            game.setShowAll(true);
                             loseMsg.showAndWait();
                         }
                         //checks whether the game is won
