@@ -43,9 +43,9 @@ public class MineController {
         winMsg.setGraphic(new ImageView(coolBig));
 
         Alert loseMsg = new Alert(Alert.AlertType.INFORMATION);
-        loseMsg.setTitle("Congratulations!!!!");
+        loseMsg.setTitle("oh no!!!!");
         loseMsg.setHeaderText(null);
-        loseMsg.setContentText("ohh no, you lost");
+        loseMsg.setContentText("you lost");
         loseMsg.setGraphic(new ImageView(loseBig));
 
 
