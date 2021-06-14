@@ -48,7 +48,6 @@ public class Mines {
         }
 
         if (board[i][j].isHasMine()) {
-//            setShowAll(true);
             return false;
         }
 
