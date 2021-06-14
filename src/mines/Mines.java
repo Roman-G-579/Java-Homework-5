@@ -192,12 +192,24 @@ public class Mines {
     public String toString() {
         StringBuilder stringBoard = new StringBuilder();
 
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                stringBoard.append(get(i, j));
+        int smallerLen;
+        int biggerLen;
+
+
+        biggerLen = height >= width ? height : width;
+        smallerLen = width < height ? width : height;
+
+        for (int i = 0; i < biggerLen; i++) {
+            for (int j = 0; j < smallerLen; j++) {
+                if (height >= width) {
+                    stringBoard.append(get(i, j));
+                } else {
+                    stringBoard.append(get(j, i));
+                }
             }
             stringBoard.append("\n");
         }
+
         return stringBoard.toString();
     }
 

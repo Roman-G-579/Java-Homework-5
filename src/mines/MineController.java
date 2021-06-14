@@ -96,7 +96,7 @@ public class MineController {
 
                     for (int k = 0; k < height; k++) {
                         for (int l = 0; l < width; l++) {
-                            Button currentButton = (Button) gridPane.getChildren().get(height * k + l);
+                            Button currentButton = currentButton = (Button) gridPane.getChildren().get(width * k + l);
                             currentButton.setText(game.get(k, l));
 
                             //if the current button is a mine
@@ -132,7 +132,12 @@ public class MineController {
                     }
                     System.out.println(game);
                 });
-                gridPane.add(button, j, i);
+                if(height>=width) {
+                    gridPane.add(button, j, i);
+                }
+                else if (height < width) {
+                    gridPane.add(button,i,j);
+                }
             }
         }
         gridLayout.getChildren().add(gridPane);
