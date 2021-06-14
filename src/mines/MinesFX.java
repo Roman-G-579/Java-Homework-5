@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -22,8 +23,8 @@ public class MinesFX extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("MineWindow.fxml"));
             Scene scene = new Scene(root);
-
-            primaryStage.setTitle("😎 😎 😎 😎 😎 😎 😎 😎 😎 😎 😎");
+            primaryStage.getIcons().add(new Image("mines/icon.png"));
+            primaryStage.setTitle("😎Minesweeper😎");
             primaryStage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();

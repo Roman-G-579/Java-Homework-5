@@ -48,7 +48,8 @@ public class Mines {
         }
 
         if (board[i][j].isHasMine()) {
-            setShowAll(true);
+//            setShowAll(true);
+            return false;
         }
 
         //opens the tile
@@ -224,26 +225,3 @@ public class Mines {
         }
     }
 }
-
-
-/*public String get(int i, int j) { //TODO: add showAll handling
-
-        if (board[i][j].isOpen() && board[i][j].isHasMine()) {
-            return "X";
-        }
-        if (board[i][j].isOpen() && !board[i][j].isHasMine()) {
-            String neighbors = Integer.toString(checkNeighbors(i, j));
-            if (neighbors.equals("0")) {
-                return " ";
-            }
-            return neighbors;
-        }
-        if (!board[i][j].isOpen() && board[i][j].isHasFlag()) {
-            return "F";
-        }
-        if (!board[i][j].isOpen() && !board[i][j].isHasFlag()) {
-            return ".";
-        }
-
-        throw new IllegalArgumentException();
-    }*/
